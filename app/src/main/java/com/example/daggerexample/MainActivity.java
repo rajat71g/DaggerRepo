@@ -4,15 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import javax.inject.Inject;
+
 public class MainActivity extends AppCompatActivity {
-    private Car car;
+    @Inject
+    Car car;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         CarComponent carComponent = DaggerCarComponent.create();
-        car = carComponent.getCar();
+
+        // This can be used for injecting multiple Field instance all at once using this method and
+        // using @Inject before field values
+        carComponent.inject(this);
         car.drive();
     }
 }
